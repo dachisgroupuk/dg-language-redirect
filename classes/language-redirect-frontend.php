@@ -90,7 +90,7 @@ class LanguageRedirectFrontend extends LanguageRedirectCore
             // Get current blog language;
             $wplang = get_option( 'WPLANG', true );
 
-            if ( ! $wplang ){
+            if ( ! $wplang || $wplang == 1){
                 $wplang = 'en_GB';
             }
             $currentLanguage = substr( $wplang, 0, 2 );
@@ -112,7 +112,7 @@ class LanguageRedirectFrontend extends LanguageRedirectCore
 
                 $shortCode = substr( $detail['code'], 0, 2 );
 
-                if ( $shortCode == $currentLanguage ){
+                if ( (string)$shortCode == (string)$currentLanguage ){
                     continue;
                 }
 
@@ -120,7 +120,7 @@ class LanguageRedirectFrontend extends LanguageRedirectCore
 
                 foreach( $languages AS $language => $value){
 
-                    if ( substr( $language, 0, 2 ) == $shortCode ){
+                    if ( (string)substr( $language, 0, 2 ) == (string)$shortCode ){
 
                         // Check the cookie to see if the blog ID differs, if it does don't redirect.
                         if ( isset( $cookie ) && isset( $cookie['blog'] ) && (int)$cookie['blog'] !== (int)$blogId ){
